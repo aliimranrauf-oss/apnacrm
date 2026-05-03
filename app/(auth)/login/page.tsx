@@ -16,12 +16,10 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-
     if (error) {
-      setError("Email ya password galat hai. Dobara try karein.");
+      setError("Email ya password galat hai.");
       setLoading(false);
     } else {
       router.push("/dashboard");
@@ -30,70 +28,55 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{background: 'var(--bg)'}}>
+      {/* Background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div style={{position:'absolute', top:'-20%', left:'50%', transform:'translateX(-50%)', width:'600px', height:'600px', background:'radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)', borderRadius:'50%'}} />
+        <div style={{position:'absolute', bottom:'10%', right:'10%', width:'300px', height:'300px', background:'radial-gradient(circle, rgba(6,182,212,0.04) 0%, transparent 70%)', borderRadius:'50%'}} />
+      </div>
+
+      <div className="w-full max-w-md relative animate-fadeUp">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-600 rounded-2xl mb-4 shadow-lg">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5" style={{background:'linear-gradient(135deg, #3b82f6, #06b6d4)', boxShadow:'0 0 40px rgba(59,130,246,0.4)'}}>
             <span className="text-2xl">📱</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">ApnaCRM</h1>
-          <p className="text-gray-500 mt-1">WhatsApp Sellers ke liye Number 1 CRM</p>
+          <h1 className="text-3xl font-display font-bold gradient-text">ApnaCRM</h1>
+          <p className="mt-2 text-sm" style={{color:'var(--text-muted)'}}>Pakistan ka #1 WhatsApp CRM</p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6">Login Karein</h2>
+        <div className="rounded-2xl p-8" style={{background:'var(--surface)', border:'1px solid var(--border)'}}>
+          <h2 className="text-xl font-display font-semibold mb-6" style={{color:'var(--text)'}}>Login Karein</h2>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                placeholder="aapka@email.com"
-                required
-              />
+              <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{color:'var(--text-muted)'}}>Email</label>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                className="input-field px-4 py-3 rounded-xl text-sm"
+                placeholder="aapka@email.com" required />
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                placeholder="••••••••"
-                required
-              />
+              <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{color:'var(--text-muted)'}}>Password</label>
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+                className="input-field px-4 py-3 rounded-xl text-sm"
+                placeholder="••••••••" required />
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+              <div className="px-4 py-3 rounded-xl text-sm" style={{background:'rgba(239,68,68,0.1)', border:'1px solid rgba(239,68,68,0.2)', color:'#f87171'}}>
                 ⚠️ {error}
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition disabled:opacity-60 disabled:cursor-not-allowed"
-            >
+            <button type="submit" disabled={loading} className="btn-primary w-full py-3 rounded-xl text-sm mt-2">
               {loading ? "Login ho raha hai..." : "Login Karein →"}
             </button>
           </form>
 
-          <p className="text-center text-gray-500 text-sm mt-6">
+          <p className="text-center text-sm mt-6" style={{color:'var(--text-muted)'}}>
             Pehli dafa?{" "}
-            <Link href="/register" className="text-green-600 font-medium hover:underline">
-              Account Banayein
-            </Link>
+            <Link href="/register" style={{color:'var(--accent)'}} className="font-semibold hover:underline">Account Banayein</Link>
           </p>
         </div>
       </div>
